@@ -7,6 +7,7 @@ import Select, {OptionsType} from 'react-select';
 import {getMetricsQuery} from './api';
 import {Option} from './types';
 import {actions} from './reducer';
+import MetricCard from '../../components/MetricCard';
 
 const useStyles = makeStyles((theme:Theme) => ({
         select:{
@@ -42,7 +43,7 @@ const Metrics:React.FC = () => {
     return(
         <Container>
             <Select className = {classes.select} options = {options} isMulti onChange = {onChange}/>
-            
+            <MetricCard/>
         </Container>
     )
 }
