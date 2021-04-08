@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import { useDispatch, useSelector } from 'react-redux';
-import {makeStyles,Theme} from '@material-ui/core';
+import {makeStyles,Theme, Typography} from '@material-ui/core';
 import { useQuery } from 'urql';
 import Select, {OptionsType} from 'react-select';
 import {getMetricsQuery} from './api';
 import {Option} from './types';
-import {actions} from './reducer';
+import {actions,getSelectedItems} from './reducer';
 import MetricCard from '../../components/MetricCard';
+import Graphs from '../../components/Graph';
+
 
 const useStyles = makeStyles((theme:Theme) => ({
         select:{
@@ -35,6 +37,8 @@ const Metrics:React.FC = () => {
         setOPtions(getMetrics.map((option:string) => ({label:option, value:option})))
     },[dispatch, result])
 
+    const selectedItems = useSelector(getSelectedItems);
+
     const onChange = (items: OptionsType<Option>, action:any) => {
         const newMetric = action && action.option && action.option.value;
         const selectedItems = items ? items.map((item:Option) => item.value):[]
@@ -44,6 +48,7 @@ const Metrics:React.FC = () => {
         <Container>
             <Select className = {classes.select} options = {options} isMulti onChange = {onChange}/>
             <MetricCard/>
+            {selectedItems.length === 0 ? <Typography>Please Select a value from Dropdown</Typography>: <Graphs/>}
         </Container>
     )
 }

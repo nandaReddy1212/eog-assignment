@@ -29,11 +29,21 @@ const slice = createSlice({
 
             };
         },
+        multipleMetricsDataReceived: (state, action:PayloadAction<MetricsPayload>) => {
+            const {metrics} = action.payload;
+            return {
+                ...state,
+                metrics,
+            };
+        },
+        
         newMetricValueFectched: (state, action: PayloadAction<IMetric>) => state,
     },
 });
 
 export const getSelectedItems = ({metrics}: IState) => metrics.selected;
+
+export const getMetrics = ({metrics: {metrics}}: IState) => metrics;
 
 export const getLatestValue = (state: IState) => state.metrics.latestValue;
 
